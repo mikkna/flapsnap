@@ -13,7 +13,10 @@ const GroupComponent = ({
   onChange,
   onRemove
 }) => {
-  const [showNewItemForm, setShowNewItemForm] = useState(null);
+  const shouldShowItemFormByDefault = !items.length;
+  const [showNewItemForm, setShowNewItemForm] = useState(
+    shouldShowItemFormByDefault
+  );
 
   let dragStartOffset;
 
