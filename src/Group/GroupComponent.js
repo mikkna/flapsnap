@@ -3,6 +3,7 @@ import Types from "prop-types";
 import Position, { getOffset } from "../Position";
 import Item from "../Item";
 import { ItemComponent, NewItemForm } from "../Item";
+import Sortable from "react-sortablejs";
 
 const GroupComponent = ({
   position,
@@ -25,11 +26,13 @@ const GroupComponent = ({
     };
   }
   function handleItemDragEnd(event) {
+    if (event.target !== event.currentTarget) return;
+
     const position = new Position({
       x: event.pageX - dragStartOffset.x,
       y: event.pageY - dragStartOffset.y
     });
-    const editedGroup = new Item({ position, title, items, timeStamp });
+    const editedGroup = cloneItem({ position });
 
     onChange(editedGroup);
   }
@@ -39,37 +42,46 @@ const GroupComponent = ({
   }
 
   function handleItemCreate(item) {
-    const editedGroup = new Item({
-      position,
-      title,
-      items: [...items, item],
-      timeStamp
-    });
+    const editedGroup = cloneItem({ items: [...items, item] });
     onChange(editedGroup);
   }
 
   function handleItemRemove(item) {
     const filteredItems = items.filter(i => i.timeStamp !== item.timeStamp);
 
-    const editedGroup = new Item({
-      position,
-      title,
-      items: filteredItems,
-      timeStamp
-    });
+    const editedGroup = cloneItem({ items: filteredItems });
     onChange(editedGroup);
     setShowNewItemForm(false);
+  }
+
+  function handleItemOrderChange(order) {
+    const sortedItems = order.map(timeStamp =>
+      items.find(item => item.timeStamp === parseInt(timeStamp))
+    );
+    const editedGroup = cloneItem({ items: sortedItems });
+    onChange(editedGroup);
   }
 
   function mapItem(item) {
     return (
       <ItemComponent
         {...item}
+        data-id={item.timeStamp}
         onRemove={() => handleItemRemove(item)}
         key={item.timeStamp}
         onClick={() => handleItemRemove(item)}
       />
     );
+  }
+
+  function cloneItem(params = {}) {
+    return new Item({
+      position,
+      title,
+      items,
+      timeStamp,
+      ...params
+    });
   }
 
   return (
@@ -89,8 +101,11 @@ const GroupComponent = ({
       </span>
 
       {(items.length || showNewItemForm) && (
-        <ul className="group-items">
-          {items.map(mapItem)}
+        <div className="group-items">
+          <Sortable tag="ul" onChange={handleItemOrderChange}>
+            {items.map(mapItem)}
+          </Sortable>
+
           {showNewItemForm && (
             <NewItemForm
               isGrouped
@@ -98,7 +113,7 @@ const GroupComponent = ({
               onClose={toggleNewItemForm}
             />
           )}
-        </ul>
+        </div>
       )}
     </div>
   );

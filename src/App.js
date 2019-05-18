@@ -6,6 +6,7 @@ import Position from "./Position";
 import { GroupComponent } from "./Group";
 import { ItemComponent } from "./Item";
 
+
 const itemsFromLocalStorage = JSON.parse(
   localStorage.getItem("dragly-items") || "[]"
 );

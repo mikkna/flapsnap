@@ -9,7 +9,8 @@ const ItemComponent = ({
   timeStamp,
   onChange,
   onRemove,
-  onClick
+  onClick,
+  ...otherProps
 }) => {
   function handleItemDragEnd(event) {
     const position = new Position({ x: event.pageX, y: event.pageY });
@@ -26,6 +27,7 @@ const ItemComponent = ({
 
   return (
     <li
+      {...otherProps}
       onClick={onClick}
       draggable={!!position}
       onDragEnd={handleItemDragEnd}
