@@ -6,7 +6,9 @@ import Position from "./Position";
 import { GroupComponent } from "./Group";
 import { ItemComponent } from "./Item";
 
-const itemsFromLocalStorage = JSON.parse(localStorage.getItem("items") || "[]");
+const itemsFromLocalStorage = JSON.parse(
+  localStorage.getItem("dragly-items") || "[]"
+);
 
 function App() {
   const [items, setItems] = useState(itemsFromLocalStorage);
@@ -21,7 +23,7 @@ function App() {
 
   function setItemsAndSave(items) {
     setItems(items);
-    localStorage.setItem("items", JSON.stringify(items));
+    localStorage.setItem("dragly-items", JSON.stringify(items));
   }
 
   function handleItemCreate(item) {
