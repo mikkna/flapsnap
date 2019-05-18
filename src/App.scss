@@ -1,0 +1,98 @@
+.board {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("./background.jpeg") center center no-repeat;
+}
+
+.item {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  position: relative;
+  .item-content {
+    color: #fff;
+    font-size: 16px;
+    padding: 0;
+    padding-right: 40px;
+  }
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    caret-color: #fff;
+    font-family: inherit;
+  }
+  &:hover {
+    > .item-remove {
+      opacity: 1;
+    }
+  }
+  &--absolute {
+    position: absolute;
+  }
+}
+
+.list-item {
+  cursor: move;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.new-item {
+  margin-bottom: 5px;
+}
+
+.group {
+  .item-content {
+    padding-right: 0;
+  }
+  .item-add {
+    padding-right: 40px;
+  }
+}
+
+.item-remove {
+  opacity: 0;
+  transition: 0.2s ease;
+  position: absolute;
+  right: 5px;
+  font-size: 24px !important;
+  vertical-align: top;
+  top: 4px;
+}
+
+ul {
+  list-style: none;
+}
+
+.group {
+  > .item-content {
+    font-size: 17px;
+  }
+  .item-remove {
+    top: 7px;
+  }
+
+  &-items {
+    padding-left: 0;
+    margin-top: 10px;
+    .item {
+      margin-bottom: 5px;
+      &-remove {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.item-button {
+  cursor: pointer;
+  color: #fff;
+  padding: 0 8px;
+  font-size: 20px;
+}
