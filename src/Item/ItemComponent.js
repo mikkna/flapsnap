@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Types from "prop-types";
 import Position from "../Position";
 import Item from "./Item";
@@ -12,6 +12,8 @@ const ItemComponent = ({
   onClick,
   ...otherProps
 }) => {
+  const [deleted, setDeleted] = useState(false);
+
   function handleItemDragEnd(event) {
     const position = new Position({ x: event.pageX, y: event.pageY });
     const editedItem = new Item({ position, title, timeStamp });
@@ -25,13 +27,25 @@ const ItemComponent = ({
     return { left: position.x, top: position.y };
   }
 
+  function handleClick() {
+    setDeleted(true);
+
+    setTimeout(() => {
+      onClick();
+    }, 200);
+  }
+
   return (
     <li
       {...otherProps}
-      onClick={onClick}
+      onClick={handleClick}
       draggable={!!position}
       onDragEnd={handleItemDragEnd}
-      className={"item" + (position ? " item--absolute" : "")}
+      className={
+        "item" +
+        (position ? " item--absolute " : "") +
+        (deleted ? " item--collapse " : "")
+      }
       style={getStyle()}
     >
       <span className="item-content">{title}</span>

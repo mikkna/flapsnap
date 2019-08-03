@@ -1,3 +1,8 @@
+body,
+body * {
+  box-sizing: border-box;
+}
+
 .board {
   position: fixed;
   top: 0;
@@ -12,6 +17,8 @@
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
   position: relative;
+  transition: 0.2s ease;
+  overflow: hidden;
   .item-content {
     color: #fff;
     font-size: 16px;
@@ -86,8 +93,16 @@ ul {
     margin-top: 10px;
     .item {
       margin-bottom: 5px;
+      height: 38px;
       &-remove {
         display: none !important;
+      }
+      &--collapse {
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
       }
     }
   }
