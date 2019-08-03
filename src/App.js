@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.scss";
 
 import { NewItemForm } from "./Item";
@@ -15,6 +15,15 @@ function App() {
   const [items, setItems] = useState(itemsFromLocalStorage);
   const [newItemPosition, setNewItemPosition] = useState(null);
 
+  useEffect(() => {
+    document.addEventListener("keydown", e => {
+      if (e.keyCode === 90 && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleUndo();
+      }
+    });
+  });
+
   function toggleAddItem(event) {
     if (event.target !== event.currentTarget) return;
 
@@ -22,8 +31,10 @@ function App() {
     setNewItemPosition(position);
   }
 
-  function setItemsAndSave(newItems) {
-    setHistory([...history, items]); // saves old state into history
+  function setItemsAndSave(newItems, saveHistory = true) {
+    if (saveHistory) {
+      setHistory([...history, items]);
+    }
     setItems(newItems);
     localStorage.setItem("dragly-items", JSON.stringify(newItems));
   }
@@ -45,7 +56,9 @@ function App() {
   }
 
   function handleUndo() {
-    setItems(history[history.length - 1]);
+    if (!history.length) return;
+
+    setItemsAndSave(history[history.length - 1] || [], false);
 
     const newHistory = [...history];
     newHistory.pop();

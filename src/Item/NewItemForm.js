@@ -5,7 +5,7 @@ import Item from "./Item";
 const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
 
-  function addNewItem(event) {
+  function handleCreateItem(event) {
     event.preventDefault();
 
     if (!newItemTitle.length) return;
@@ -13,6 +13,18 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     const item = new Item({ position, title: newItemTitle });
     onCreate(item);
     setNewItemTitle("");
+  }
+
+  function handleInputKeyDown(event) {
+    switch (event.keyCode) {
+      case 27: // esc
+        return onClose();
+      case 8: // backspace
+        if (newItemTitle.length) return;
+        return onClose();
+      default:
+        return;
+    }
   }
 
   function getStyle() {
@@ -23,18 +35,6 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
 
   function handleTitleChange({ target: { value } }) {
     setNewItemTitle(value);
-  }
-
-  function handleInputKeyDown(event) {
-    switch (event.keyCode) {
-      case 27: // esc
-        return onClose();
-      case 8:  // backspace
-        if (newItemTitle.length) return;
-        return onClose();
-      default:
-        return;
-    }
   }
 
   function handleCreateGroup() {
@@ -50,7 +50,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     <form
       className={"new-item item" + (position ? " item--absolute" : "")}
       style={getStyle()}
-      onSubmit={addNewItem}
+      onSubmit={isGrouped ? handleCreateItem : handleCreateGroup}
     >
       <input
         type="text"
@@ -60,11 +60,6 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
         onChange={handleTitleChange}
         onKeyDown={handleInputKeyDown}
       />
-      {isGrouped || (
-        <button type="button" onClick={handleCreateGroup}>
-          Group
-        </button>
-      )}
     </form>
   );
 };
