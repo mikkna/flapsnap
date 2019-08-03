@@ -35,6 +35,12 @@ const ItemComponent = ({
     }, 200);
   }
 
+  function isLink() {
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
+
+    return urlRegex.test(title);
+  }
+
   return (
     <li
       {...otherProps}
@@ -48,7 +54,22 @@ const ItemComponent = ({
       }
       style={getStyle()}
     >
-      <span className="item-content">{title}</span>
+      <span className="item-content">
+        {isLink() ? (
+          <a
+            href={title}
+            rel="noreferrer noopener"
+            target="_blank"
+            onClick={e => {
+              e.stopPropagation();
+            }}
+          >
+            {title.slice(0, 40)}...
+          </a>
+        ) : (
+          title
+        )}
+      </span>
       <span className="item-remove item-button" onClick={onRemove}>
         &times;
       </span>
