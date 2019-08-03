@@ -25,7 +25,7 @@ function App() {
   function setItemsAndSave(newItems) {
     setHistory([...history, items]); // saves old state into history
     setItems(newItems);
-    localStorage.setItem("dragly-items", JSON.stringify(items));
+    localStorage.setItem("dragly-items", JSON.stringify(newItems));
   }
 
   function handleItemCreate(item) {
