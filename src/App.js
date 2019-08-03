@@ -6,12 +6,12 @@ import Position from "./Position";
 import { GroupComponent } from "./Group";
 import { ItemComponent } from "./Item";
 
-
 const itemsFromLocalStorage = JSON.parse(
   localStorage.getItem("dragly-items") || "[]"
 );
 
 function App() {
+  const [history, setHistory] = useState([]);
   const [items, setItems] = useState(itemsFromLocalStorage);
   const [newItemPosition, setNewItemPosition] = useState(null);
 
@@ -22,9 +22,10 @@ function App() {
     setNewItemPosition(position);
   }
 
-  function setItemsAndSave(items) {
-    setItems(items);
-    localStorage.setItem("dragly-items", JSON.stringify(items));
+  function setItemsAndSave(newItems) {
+    setHistory([...history, items]); // saves old state into history
+    setItems(newItems);
+    // localStorage.setItem("dragly-items", JSON.stringify(items));
   }
 
   function handleItemCreate(item) {
@@ -41,6 +42,14 @@ function App() {
   function handleItemRemove(item) {
     const filteredItems = items.filter(i => i.timeStamp !== item.timeStamp);
     setItemsAndSave([...filteredItems]);
+  }
+
+  function handleUndo() {
+    setItems(history[history.length - 1]);
+
+    const newHistory = [...history];
+    newHistory.pop();
+    setHistory(newHistory);
   }
 
   const itemElements = items.map(item => {
@@ -85,6 +94,14 @@ function App() {
       <div className="board" onClick={toggleAddItem}>
         <ul>{itemElements}</ul>
         {newItemPosition && input}
+        <button
+          className={"undo " + (history.length ? "visible" : "")}
+          onClick={handleUndo}
+        >
+          <span role="img" aria-label="Undo">
+            🤭
+          </span>
+        </button>
       </div>
     </div>
   );

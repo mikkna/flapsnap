@@ -99,3 +99,29 @@ ul {
   padding: 0 8px;
   font-size: 20px;
 }
+
+.undo {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  background: none;
+  font-size: 0px;
+  pointer-events: none;
+  outline: none;
+  &.visible {
+    font-size: 30px;
+    pointer-events: all;
+  }
+  &:hover {
+    font-size: 35px;
+  }
+  &:active {
+    font-size: 33px;
+  }
+}
