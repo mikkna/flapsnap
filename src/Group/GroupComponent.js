@@ -68,9 +68,8 @@ const GroupComponent = ({
   function mapItem(item) {
     return (
       <ItemComponent
-        {...item}
+        title={item.title}
         data-id={item.timeStamp}
-        onRemove={() => handleItemRemove(item)}
         key={item.timeStamp}
         onClick={() => handleItemRemove(item)}
       />

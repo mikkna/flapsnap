@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Types from "prop-types";
 import Item from "./Item";
+import { getStyleObject } from "./utils";
 
 const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
@@ -27,12 +28,6 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     }
   }
 
-  function getStyle() {
-    if (!position) return {};
-
-    return { left: position.x, top: position.y };
-  }
-
   function handleTitleChange({ target: { value } }) {
     setNewItemTitle(value);
   }
@@ -49,7 +44,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
   return (
     <form
       className={"new-item item" + (position ? " item--absolute" : "")}
-      style={getStyle()}
+      style={getStyleObject(position)}
       onSubmit={isGrouped ? handleCreateItem : handleCreateGroup}
     >
       <input

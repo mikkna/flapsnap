@@ -1,31 +1,9 @@
 import React, { useState } from "react";
 import Types from "prop-types";
-import Position from "../Position";
-import Item from "./Item";
+import { isLink } from "./utils";
 
-const ItemComponent = ({
-  position,
-  title,
-  timeStamp,
-  onChange,
-  onRemove,
-  onClick,
-  ...otherProps
-}) => {
+const ItemComponent = ({ title, onClick, ...otherProps }) => {
   const [deleted, setDeleted] = useState(false);
-
-  function handleItemDragEnd(event) {
-    const position = new Position({ x: event.pageX, y: event.pageY });
-    const editedItem = new Item({ position, title, timeStamp });
-
-    onChange(editedItem);
-  }
-
-  function getStyle() {
-    if (!position) return {};
-
-    return { left: position.x, top: position.y };
-  }
 
   function handleClick() {
     setDeleted(true);
@@ -35,27 +13,26 @@ const ItemComponent = ({
     }, 200);
   }
 
-  function isLink() {
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
-
-    return urlRegex.test(title);
+  function parseTitle() {
+    let urlSliceRegex = /(https?:\/\/)?(www\.)?/;
+    if (isLink(title)) {
+      let parsedTitle = title.replace(urlSliceRegex, "");
+      if (parsedTitle.length > 43) {
+        return parsedTitle.slice(0, 40) + "...";
+      }
+      return parsedTitle;
+    }
+    return title;
   }
 
   return (
     <li
       {...otherProps}
       onClick={handleClick}
-      draggable={!!position}
-      onDragEnd={handleItemDragEnd}
-      className={
-        "item" +
-        (position ? " item--absolute " : "") +
-        (deleted ? " item--collapse " : "")
-      }
-      style={getStyle()}
+      className={"item" + (deleted ? " item--collapse " : "")}
     >
       <span className="item-content">
-        {isLink() ? (
+        {isLink(title) ? (
           <a
             href={title}
             rel="noreferrer noopener"
@@ -64,30 +41,23 @@ const ItemComponent = ({
               e.stopPropagation();
             }}
           >
-            {title.slice(0, 40)}...
+            {parseTitle()}
           </a>
         ) : (
-          title
+          parseTitle()
         )}
-      </span>
-      <span className="item-remove item-button" onClick={onRemove}>
-        &times;
       </span>
     </li>
   );
 };
 
 ItemComponent.propTypes = {
-  position: Types.shape({ x: Types.number, y: Types.number }),
   title: Types.string.isRequired,
-  onChange: Types.func,
-  onRemove: Types.func.isRequired,
   onClick: Types.func
 };
 
 ItemComponent.defaultProps = {
-  onClick: () => {},
-  onChange: () => {}
+  onClick: () => {}
 };
 
 export default ItemComponent;

@@ -9,10 +9,12 @@ body * {
   bottom: 0;
   right: 0;
   left: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url("./background.jpeg") center center no-repeat;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.15)
+    ),
+    url("https://picsum.photos/1680/1000") center center no-repeat;
 }
-
 .item {
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
@@ -43,6 +45,10 @@ body * {
   }
   &.sortable-chosen {
     opacity: 0.3;
+  }
+  a {
+    text-decoration: underline;
+    color: #fff;
   }
 }
 
