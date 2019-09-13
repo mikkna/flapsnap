@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Types from "prop-types";
 import { isLink } from "./utils";
+import classnames from 'classnames';
 
 const ItemComponent = ({ title, onClick, ...otherProps }) => {
   const [deleted, setDeleted] = useState(false);
@@ -29,7 +30,9 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
     <li
       {...otherProps}
       onClick={handleClick}
-      className={"item" + (deleted ? " item--collapse " : "")}
+      className={classnames('item ', {
+        'item--collapse': deleted
+      })}
     >
       <span className="item-content">
         {isLink(title) ? (
@@ -44,8 +47,8 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
             {parseTitle()}
           </a>
         ) : (
-          parseTitle()
-        )}
+            parseTitle()
+          )}
       </span>
     </li>
   );
@@ -57,7 +60,7 @@ ItemComponent.propTypes = {
 };
 
 ItemComponent.defaultProps = {
-  onClick: () => {}
+  onClick: () => { }
 };
 
 export default ItemComponent;

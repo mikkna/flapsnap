@@ -16,12 +16,15 @@ body * {
     url("https://picsum.photos/1680/1000") center center no-repeat;
 }
 .item {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   position: relative;
   transition: 0.2s ease;
-  transition-property: height, padding, margin;
+  transition-property: height, padding, margin, opacity, transform;
   overflow: hidden;
+  border-radius: 4px;
+  backdrop-filter: blur(13px);
+
   .item-content {
     color: #fff;
     font-size: 16px;
@@ -52,7 +55,7 @@ body * {
   }
 }
 
-.list-item {
+[draggable] {
   cursor: move;
   cursor: grab;
   &:active {
@@ -96,6 +99,11 @@ ul {
     top: 7px;
   }
 
+  &.item--collapse {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
   &-items {
     margin-top: 10px;
     .item {
@@ -104,7 +112,7 @@ ul {
       &-remove {
         display: none !important;
       }
-      &--collapse {
+      &.item--collapse {
         height: 0;
         padding-top: 0;
         padding-bottom: 0;

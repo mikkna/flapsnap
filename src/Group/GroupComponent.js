@@ -4,6 +4,7 @@ import Position, { getOffset } from "../Position";
 import Item from "../Item";
 import { ItemComponent, NewItemForm } from "../Item";
 import Sortable from "react-sortablejs";
+import classnames from 'classnames';
 
 const GroupComponent = ({
   position,
@@ -17,6 +18,7 @@ const GroupComponent = ({
   const [showNewItemForm, setShowNewItemForm] = useState(
     shouldShowItemFormByDefault
   );
+  const [deleted, setDeleted] = useState(false);
 
   let dragStartOffset;
 
@@ -38,6 +40,14 @@ const GroupComponent = ({
     const editedGroup = cloneItem({ position });
 
     onChange(editedGroup);
+  }
+
+  function handleGroupDelete() {
+    setDeleted(true);
+
+    setTimeout(() => {
+      onRemove();
+    }, 200);
   }
 
   function toggleNewItemForm() {
@@ -91,14 +101,17 @@ const GroupComponent = ({
       draggable={true}
       onDragStart={handleItemDragStart}
       onDragEnd={handleItemDragEnd}
-      className={"item list-item group" + (position ? " item--absolute" : "")}
+      className={classnames('item group', {
+        'item--absolute': position,
+        'item--collapse': deleted
+      })}
       style={{ left: position.x, top: position.y }}
     >
       {title && <span className="item-content">{title}</span>}
       <span className="item-add item-button" onClick={toggleNewItemForm}>
         +
       </span>
-      <span className="item-remove item-button" onClick={onRemove}>
+      <span className="item-remove item-button" onClick={handleGroupDelete}>
         &times;
       </span>
 
