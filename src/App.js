@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import classnames from 'classnames';
 import "./App.scss";
 
 import { NewItemForm } from "./Item";
@@ -14,6 +15,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [items, setItems] = useState(itemsFromLocalStorage);
   const [newItemPosition, setNewItemPosition] = useState(null);
+  const [isObfuscated, setIsObfuscated] = useState(false);
 
   useEffect(() => {
     document.addEventListener("keydown", e => {
@@ -65,6 +67,10 @@ function App() {
     setHistory(newHistory);
   }
 
+  function handleObfuscate() {
+    setIsObfuscated(!isObfuscated);
+  }
+
   const itemElements = items.map(item => {
     if (item.items) {
       return mapGroup(item);
@@ -94,25 +100,30 @@ function App() {
     );
   }
 
-  const input = (
-    <NewItemForm
-      onCreate={handleItemCreate}
-      position={newItemPosition}
-      onClose={() => setNewItemPosition(null)}
-    />
-  );
-
   return (
     <div className="app">
-      <div className="board" onClick={toggleAddItem}>
+      <div className={classnames('board', { obfuscated: isObfuscated })} onClick={toggleAddItem}>
         <ul>{itemElements}</ul>
-        {newItemPosition && input}
+        {newItemPosition && <NewItemForm
+          onCreate={handleItemCreate}
+          position={newItemPosition}
+          onClose={() => setNewItemPosition(null)}
+        />}
         <button
-          className={"undo " + (history.length ? "visible" : "")}
+          className={classnames("undo action", { visible: history.length })}
           onClick={handleUndo}
         >
           <span role="img" aria-label="Undo">
             🤭
+          </span>
+        </button>
+
+        <button
+          className={classnames("obfuscate action ", { visible: items.length })}
+          onClick={handleObfuscate}
+        >
+          <span role="img" aria-label="Obfuscate">
+            {isObfuscated ? '🐵' : '🙈'}
           </span>
         </button>
       </div>

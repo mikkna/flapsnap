@@ -14,6 +14,11 @@ body * {
       rgba(255, 255, 255, 0.15)
     ),
     url("https://picsum.photos/1680/1000") center center no-repeat;
+  &.obfuscated {
+    .item > .item-content {
+      filter: blur(5px);
+    }
+  }
 }
 .item {
   background-color: rgba(0, 0, 0, 0.5);
@@ -30,6 +35,7 @@ body * {
     font-size: 16px;
     padding: 0;
     padding-right: 40px;
+    transition: filter 0.1s ease;
   }
   input {
     background-color: transparent;
@@ -130,13 +136,8 @@ ul {
   font-size: 20px;
 }
 
-.undo {
+.action {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
   cursor: pointer;
   border: none;
   transition: all 0.2s ease;
@@ -144,9 +145,13 @@ ul {
   font-size: 0px;
   pointer-events: none;
   outline: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+
   &.visible {
     font-size: 30px;
-    pointer-events: all;
+    pointer-events: all;  
   }
   &:hover {
     font-size: 35px;
@@ -154,4 +159,15 @@ ul {
   &:active {
     font-size: 33px;
   }
+}
+
+.undo {
+  bottom: 15px;
+  right: 15px;
+}
+
+
+.obfuscate {
+  top: 15px;
+  right: 15px;
 }
