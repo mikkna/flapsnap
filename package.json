@@ -2,21 +2,21 @@
   "name": "to-drag-list",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mikkna.github.io/flapsnap",
   "dependencies": {
     "classnames": "^2.2.6",
-    "firebase": "^6.6.0",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
+    "firebase": "^7.2.2",
+    "node-sass": "^4.13.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "^3.2.0",
     "react-sortablejs": "^1.5.1",
-    "sortablejs": "^1.6.1"
+    "sortablejs": "^1.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "publish": "yarn run build && node internal/publish.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +32,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "gh-pages": "^2.1.1",
+    "npm-gui": "^2.1.0",
+    "npx": "^10.2.0"
   }
 }
