@@ -18,8 +18,8 @@ jobs:
         node-version: '12.x'
     - name: install, build, deploy
       run: |
-        yarn
-        yarn run build
-        yarn run deploy
+        npm
+        npm run build
+        npm run deploy
       env:
         CI: true

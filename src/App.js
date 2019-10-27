@@ -11,6 +11,8 @@ const itemsFromLocalStorage = JSON.parse(
 );
 
 function App() {
+  console.log('hello');
+
   const [history, setHistory] = useState([]);
   const [items, setItems] = useState(itemsFromLocalStorage);
   const [newItemPosition, setNewItemPosition] = useState(null);
