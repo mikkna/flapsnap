@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && NODE_DEBUG=gh-pages gh-pages -d build"
+    "deploy": "npm run build && NODE_DEBUG=gh-pages node internal/deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
