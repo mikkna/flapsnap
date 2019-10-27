@@ -18,7 +18,7 @@ jobs:
         node-version: '12.x'
     - name: install, build, deploy
       run: |
-        npm i
+        npm ci
         npm run build
         npm run deploy
       env:
