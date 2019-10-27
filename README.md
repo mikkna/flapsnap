@@ -17,6 +17,6 @@ You will also see any lint errors in the console.
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### `yarn run publish`
+### `yarn run deploy`
 
-Builds the app with the `build` command and publishes the result to [GitHub Pages](https://mikkna.github.io/flapsnap/)
+Builds the app with the `build` command and deploy the result to [GitHub Pages](https://mikkna.github.io/flapsnap/)

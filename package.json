@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "publish": "yarn run build && node internal/publish.js"
+    "deploy": "yarn run build && node internal/deploy.js"
   },
   "eslintConfig": {
     "extends": "react-app"
