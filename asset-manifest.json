@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/flapsnap/static/css/main.6b7824d5.chunk.css",
-    "main.js": "/flapsnap/static/js/main.da658437.chunk.js",
-    "main.js.map": "/flapsnap/static/js/main.da658437.chunk.js.map",
+    "main.css": "/flapsnap/static/css/main.1e9e53ae.chunk.css",
+    "main.js": "/flapsnap/static/js/main.ec91e023.chunk.js",
+    "main.js.map": "/flapsnap/static/js/main.ec91e023.chunk.js.map",
     "runtime-main.js": "/flapsnap/static/js/runtime-main.56a2cae4.js",
     "runtime-main.js.map": "/flapsnap/static/js/runtime-main.56a2cae4.js.map",
-    "static/js/2.f3e8b822.chunk.js": "/flapsnap/static/js/2.f3e8b822.chunk.js",
-    "static/js/2.f3e8b822.chunk.js.map": "/flapsnap/static/js/2.f3e8b822.chunk.js.map",
+    "static/js/2.d1e94869.chunk.js": "/flapsnap/static/js/2.d1e94869.chunk.js",
+    "static/js/2.d1e94869.chunk.js.map": "/flapsnap/static/js/2.d1e94869.chunk.js.map",
     "index.html": "/flapsnap/index.html",
-    "precache-manifest.9be34d511a9469af61284e4ac77374c4.js": "/flapsnap/precache-manifest.9be34d511a9469af61284e4ac77374c4.js",
+    "precache-manifest.531e2c4d273f17f830a934b6fff70128.js": "/flapsnap/precache-manifest.531e2c4d273f17f830a934b6fff70128.js",
     "service-worker.js": "/flapsnap/service-worker.js",
-    "static/css/main.6b7824d5.chunk.css.map": "/flapsnap/static/css/main.6b7824d5.chunk.css.map"
+    "static/css/main.1e9e53ae.chunk.css.map": "/flapsnap/static/css/main.1e9e53ae.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.56a2cae4.js",
-    "static/js/2.f3e8b822.chunk.js",
-    "static/css/main.6b7824d5.chunk.css",
-    "static/js/main.da658437.chunk.js"
+    "static/js/2.d1e94869.chunk.js",
+    "static/css/main.1e9e53ae.chunk.css",
+    "static/js/main.ec91e023.chunk.js"
   ]
 }
