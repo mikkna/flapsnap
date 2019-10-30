@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Types from "prop-types";
 import Item from "./Item";
 import { getStyleObject } from "./utils";
+import classnames from 'classnames';
 
 const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
@@ -43,7 +44,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
 
   return (
     <form
-      className={"new-item item" + (position ? " item--absolute" : "")}
+      className={classnames("new-item item", { "item--absolute": position })}
       style={getStyleObject(position)}
       onSubmit={isGrouped ? handleCreateItem : handleCreateGroup}
     >

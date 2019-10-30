@@ -96,6 +96,14 @@ const GroupComponent = ({
     });
   }
 
+  function getStyle() {
+    return {
+      transform: "translate(" + position.x + 'px,' + position.y + 'px)' + (deleted ? 'scale(0.7)' : '')
+    }
+  }
+  // TODO have an onDrag event for GroupComponent. The board will have an onDragOver listener
+  // TODO we'll always keep the dragged element in App.js state
+  // TODO if it moves, we instantly change the actual object
   return (
     <div
       draggable={true}
@@ -105,7 +113,7 @@ const GroupComponent = ({
         'item--absolute': position,
         'item--collapse': deleted
       })}
-      style={{ left: position.x, top: position.y }}
+      style={getStyle()}
     >
       {title && <span className="item-content">{title}</span>}
       <span className="item-add item-button" onClick={toggleNewItemForm}>
