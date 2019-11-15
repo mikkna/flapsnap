@@ -15,7 +15,7 @@ class Draggable extends Component {
   ref = createRef();
 
   state = {
-    dragPosition: this.props.position
+    dragPosition: null,
   };
 
   dragStartOffset = null;

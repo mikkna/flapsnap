@@ -5,6 +5,7 @@ import { ItemComponent, NewItemForm } from "../Item";
 import Sortable from "react-sortablejs";
 import classnames from "classnames";
 import { Undraggable } from "../Draggable";
+import { getCopiedText, copyToClipboard } from './utils';
 
 const GroupComponent = ({
   position,
@@ -47,17 +48,15 @@ const GroupComponent = ({
   }
 
   function handleItemOrderChange(order) {
-    console.log(
-      title,
-      order,
-      items.map(i => i.timeStamp.toString())
-    );
-
     const sortedItems = order.map(timeStamp =>
       items.find(item => item.timeStamp === parseInt(timeStamp))
     );
     const editedGroup = cloneItem({ items: sortedItems });
     onChange(editedGroup);
+  }
+
+  function handleCopy() {
+    copyToClipboard(getCopiedText({ title, items }));
   }
 
   function mapItem(item) {
@@ -123,6 +122,9 @@ const GroupComponent = ({
           </Undraggable>
         </div>
       )}
+      <Undraggable onClick={handleCopy} className="item-copy">
+        <button>copy</button>
+      </Undraggable>
     </div>
   );
 };

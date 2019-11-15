@@ -28,7 +28,6 @@ body * {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   position: relative;
-  overflow: hidden;
   border-radius: 4px;
   backdrop-filter: blur(13px);
 
@@ -49,6 +48,10 @@ body * {
   &:hover {
     > .item-remove {
       opacity: 1;
+    }
+    > .item-copy {
+      height: 17px;
+      transition-delay: 0.5s;
     }
   }
   &--absolute {
@@ -144,6 +147,27 @@ ul {
   padding: 0 8px;
   font-size: 20px;
   display: inline;
+}
+
+.item-copy {
+  display: block;
+  transition: 0.4s ease;
+  overflow: hidden;
+  height: 0;
+  button {
+    padding: 0;
+    background: none;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.1s ease;
+    &:active {
+      outline: none;
+      transform: scale(0.95);
+    }
+  }
 }
 
 .action {
