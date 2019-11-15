@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Types from "prop-types";
 import Item from "./Item";
 import { getStyleObject } from "./utils";
-import classnames from 'classnames';
+import classnames from "classnames";
 
 const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
   const [newItemTitle, setNewItemTitle] = useState("");

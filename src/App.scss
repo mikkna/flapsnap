@@ -64,8 +64,6 @@ body * {
 }
 
 [draggable] {
-  cursor: move;
-  cursor: grab;
   &:active {
     cursor: grabbing;
   }
@@ -76,12 +74,15 @@ body * {
 }
 
 .group {
+  cursor: move;
+  cursor: grab;
   .item-content {
     padding-right: 0;
   }
   .item-add {
     padding-right: 40px;
   }
+  user-select: none;
   top: 0;
   left: 0;
 }
@@ -142,6 +143,7 @@ ul {
   color: #fff;
   padding: 0 8px;
   font-size: 20px;
+  display: inline;
 }
 
 .action {

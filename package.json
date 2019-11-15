@@ -16,7 +16,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && NODE_DEBUG=gh-pages node internal/deploy"
+    "deploy": "npm run build && NODE_DEBUG=gh-pages node internal/deploy",
+    "format": "prettier-eslint \"src/**/*.js\" --write"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +38,7 @@
     "chalk": "^2.4.2",
     "gh-pages": "^2.1.1",
     "npm-gui": "^2.1.0",
-    "npx": "^10.2.0"
+    "npx": "^10.2.0",
+    "prettier-eslint": "^9.0.0"
   }
 }

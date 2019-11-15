@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Types from "prop-types";
-import Position, { getOffset } from "../Position";
 import Item from "../Item";
 import { ItemComponent, NewItemForm } from "../Item";
 import Sortable from "react-sortablejs";
-import classnames from 'classnames';
+import classnames from "classnames";
+import { Undraggable } from "../Draggable";
 
 const GroupComponent = ({
   position,
@@ -18,29 +18,8 @@ const GroupComponent = ({
   const [showNewItemForm, setShowNewItemForm] = useState(
     shouldShowItemFormByDefault
   );
+
   const [deleted, setDeleted] = useState(false);
-
-  let dragStartOffset;
-
-  function handleItemDragStart(event) {
-    const pointerPosition = { x: event.pageX, y: event.pageY };
-    const elementPosition = getOffset(event.target);
-    dragStartOffset = {
-      x: pointerPosition.x - elementPosition.x,
-      y: pointerPosition.y - elementPosition.y
-    };
-  }
-  function handleItemDragEnd(event) {
-    if (event.target !== event.currentTarget) return;
-
-    const position = new Position({
-      x: event.pageX - dragStartOffset.x,
-      y: event.pageY - dragStartOffset.y
-    });
-    const editedGroup = cloneItem({ position });
-
-    onChange(editedGroup);
-  }
 
   function handleGroupDelete() {
     setDeleted(true);
@@ -50,7 +29,7 @@ const GroupComponent = ({
     }, 200);
   }
 
-  function toggleNewItemForm() {
+  function toggleNewItemForm(e) {
     setShowNewItemForm(!showNewItemForm);
   }
 
@@ -68,6 +47,12 @@ const GroupComponent = ({
   }
 
   function handleItemOrderChange(order) {
+    console.log(
+      title,
+      order,
+      items.map(i => i.timeStamp.toString())
+    );
+
     const sortedItems = order.map(timeStamp =>
       items.find(item => item.timeStamp === parseInt(timeStamp))
     );
@@ -78,9 +63,9 @@ const GroupComponent = ({
   function mapItem(item) {
     return (
       <ItemComponent
-        title={item.title}
-        data-id={item.timeStamp}
         key={item.timeStamp}
+        data-id={item.timeStamp}
+        title={item.title}
         onClick={() => handleItemRemove(item)}
       />
     );
@@ -98,44 +83,44 @@ const GroupComponent = ({
 
   function getStyle() {
     return {
-      transform: "translate(" + position.x + 'px,' + position.y + 'px)' + (deleted ? 'scale(0.7)' : '')
-    }
+      transform: deleted ? "scale(0.7)" : ""
+    };
   }
-  // TODO have an onDrag event for GroupComponent. The board will have an onDragOver listener
-  // TODO we'll always keep the dragged element in App.js state
-  // TODO if it moves, we instantly change the actual object
+
   return (
     <div
-      draggable={true}
-      onDragStart={handleItemDragStart}
-      onDragEnd={handleItemDragEnd}
-      className={classnames('item group', {
-        'item--absolute': position,
-        'item--collapse': deleted
+      className={classnames("item group", {
+        "item--collapse": deleted
       })}
       style={getStyle()}
     >
       {title && <span className="item-content">{title}</span>}
-      <span className="item-add item-button" onClick={toggleNewItemForm}>
+      <Undraggable className="item-add item-button" onClick={toggleNewItemForm}>
         +
-      </span>
-      <span className="item-remove item-button" onClick={handleGroupDelete}>
+      </Undraggable>
+
+      <Undraggable
+        className="item-remove item-button"
+        onClick={handleGroupDelete}
+      >
         &times;
-      </span>
+      </Undraggable>
 
       {(items.length || showNewItemForm) && (
         <div className="group-items">
-          <Sortable tag="ul" onChange={handleItemOrderChange}>
-            {items.map(mapItem)}
-          </Sortable>
+          <Undraggable>
+            <Sortable tag="ul" onChange={handleItemOrderChange}>
+              {items.map(mapItem)}
+            </Sortable>
 
-          {showNewItemForm && (
-            <NewItemForm
-              isGrouped
-              onCreate={handleItemCreate}
-              onClose={toggleNewItemForm}
-            />
-          )}
+            {showNewItemForm && (
+              <NewItemForm
+                isGrouped
+                onCreate={handleItemCreate}
+                onClose={toggleNewItemForm}
+              />
+            )}
+          </Undraggable>
         </div>
       )}
     </div>
@@ -150,4 +135,4 @@ GroupComponent.propTypes = {
   onRemove: Types.func.isRequired
 };
 
-export default GroupComponent;
+export default React.memo(GroupComponent);
