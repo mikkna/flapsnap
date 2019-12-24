@@ -94,10 +94,12 @@ function App() {
     return mapGroup(group);
   });
 
+  const env = process.env.NODE_ENV;
+
   return (
     <div className="app">
       <div
-        className={classnames("board", { obfuscated: isObfuscated })}
+        className={classnames("board", { obfuscated: isObfuscated }, env)}
         onClick={toggleAddItem}
       >
         <ul>{groupElements}</ul>

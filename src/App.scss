@@ -9,12 +9,20 @@ body * {
   bottom: 0;
   right: 0;
   left: 0;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.15),
-      rgba(255, 255, 255, 0.15)
-    ),
-    url("https://picsum.photos/1680/1000") center center no-repeat;
 
+  &.development {
+    background: linear-gradient(
+      rgba(100, 100, 100, 0.5),
+      rgba(100, 100, 100, 0.5)
+    );
+  }
+  &.production {
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15)
+      ),
+      url("https://picsum.photos/1680/1000") center center no-repeat;
+  }
   &.obfuscated {
     .item > {
       .item-content,
