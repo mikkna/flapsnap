@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "02c13d4d0d6b4a85d3eda7cd3859c452",
+    "revision": "dfefa57156e817bb3d8b9384d9fcbe56",
     "url": "/flapsnap/index.html"
   },
   {
-    "revision": "e5ff9febc32e6e4d5a74",
+    "revision": "8305dc7d21c0643f31db",
     "url": "/flapsnap/static/css/main.b0a4d747.chunk.css"
   },
   {
-    "revision": "b27908d9385a1ece58a3",
-    "url": "/flapsnap/static/js/2.c7fa026c.chunk.js"
+    "revision": "864460a6bce9b088e6fd",
+    "url": "/flapsnap/static/js/2.0b576e3c.chunk.js"
   },
   {
-    "revision": "e5ff9febc32e6e4d5a74",
-    "url": "/flapsnap/static/js/main.cadf5100.chunk.js"
+    "revision": "8305dc7d21c0643f31db",
+    "url": "/flapsnap/static/js/main.2ef1866d.chunk.js"
   },
   {
     "revision": "1a2cf2cdd991be18eb82",
