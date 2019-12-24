@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/flapsnap/precache-manifest.f589b572e9972abc5152c2cc2574619a.js"
+  "/flapsnap/precache-manifest.5ef5380a60f0194c0d0ed7185b0f2239.js"
 );
 
 self.addEventListener('message', (event) => {
