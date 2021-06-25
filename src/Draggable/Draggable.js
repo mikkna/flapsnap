@@ -8,8 +8,8 @@ class Draggable extends Component {
     onDragEnd: Types.func.isRequired,
     position: Types.shape({
       x: Types.number.isRequired,
-      y: Types.number.isRequired
-    }).isRequired
+      y: Types.number.isRequired,
+    }).isRequired,
   };
 
   ref = createRef();
@@ -20,32 +20,32 @@ class Draggable extends Component {
 
   dragStartOffset = null;
 
-  isValidDragTarget = target => {
+  isValidDragTarget = (target) => {
     const isChildOfGroupItems = !!target.closest(".undraggable");
     return !isChildOfGroupItems;
   };
 
-  handleItemDragStart = event => {
+  handleItemDragStart = (event) => {
     if (!this.isValidDragTarget(event.target)) return;
 
     const pointerPosition = { x: event.pageX, y: event.pageY };
     const elementPosition = getOffset(event.currentTarget);
     this.dragStartOffset = {
       x: pointerPosition.x - elementPosition.x,
-      y: pointerPosition.y - elementPosition.y
+      y: pointerPosition.y - elementPosition.y,
     };
 
     document.addEventListener("mousemove", this.handleItemDrag);
   };
 
-  handleItemDrag = event => {
+  handleItemDrag = (event) => {
     const newPosition = new Position({
       x: event.pageX - this.dragStartOffset.x,
-      y: event.pageY - this.dragStartOffset.y
+      y: event.pageY - this.dragStartOffset.y,
     });
 
     this.setState({
-      dragPosition: newPosition
+      dragPosition: newPosition,
     });
   };
 
@@ -61,7 +61,7 @@ class Draggable extends Component {
   getStyle(position) {
     return {
       left: position.x,
-      top: position.y
+      top: position.y,
     };
   }
 

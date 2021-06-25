@@ -17,11 +17,7 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
   function parseTitle() {
     let urlSliceRegex = /(https?:\/\/)?(www\.)?/;
     if (isLink(title)) {
-      let parsedTitle = title.replace(urlSliceRegex, "");
-      if (parsedTitle.length > 43) {
-        return parsedTitle.slice(0, 40) + "...";
-      }
-      return parsedTitle;
+      return title.replace(urlSliceRegex, "");
     }
     return title;
   }
@@ -31,23 +27,23 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
       {...otherProps}
       onClick={handleClick}
       className={classnames("item ", {
-        "item--collapse": deleted
+        "item--collapse": deleted,
       })}
     >
-      <span className="item-content">
+      <span className="item-content item-content-block" title={title}>
         {isLink(title) ? (
           <a
             href={title}
             rel="noreferrer noopener"
             target="_blank"
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
             }}
           >
             {parseTitle()}
           </a>
         ) : (
-          parseTitle()
+          title
         )}
       </span>
     </li>
@@ -56,11 +52,11 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
 
 ItemComponent.propTypes = {
   title: Types.string.isRequired,
-  onClick: Types.func
+  onClick: Types.func,
 };
 
 ItemComponent.defaultProps = {
-  onClick: () => {}
+  onClick: () => {},
 };
 
 export default ItemComponent;

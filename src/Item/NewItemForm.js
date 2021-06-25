@@ -37,7 +37,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     const group = new Item({
       position: position,
       title: newItemTitle,
-      items: []
+      items: [],
     });
     onCreate(group);
   }
@@ -64,7 +64,7 @@ NewItemFrom.propTypes = {
   isGrouped: Types.bool,
   position: Types.shape({}),
   onCreate: Types.func.isRequired,
-  onClose: Types.func.isRequired
+  onClose: Types.func.isRequired,
 };
 
 export default NewItemFrom;

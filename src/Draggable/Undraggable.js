@@ -10,11 +10,11 @@ const Undraggable = ({ children, className, ...rest }) => (
 
 Undraggable.propTypes = {
   children: Types.node.isRequired,
-  className: Types.string
+  className: Types.string,
 };
 
 Undraggable.defaultProps = {
-  className: ""
+  className: "",
 };
 
 export default Undraggable;

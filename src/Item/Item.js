@@ -3,7 +3,7 @@ export default class Item {
     title = "",
     position = null,
     timeStamp = Date.now(),
-    items
+    items,
   } = {}) {
     this.title = title;
     this.position = position;

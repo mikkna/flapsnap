@@ -18,7 +18,7 @@ function App() {
   const [isObfuscated, setIsObfuscated] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("keydown", e => {
+    document.addEventListener("keydown", (e) => {
       if (e.keyCode === 90 && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         handleUndo();
@@ -47,14 +47,16 @@ function App() {
   }
 
   function handleItemChange(newValue, oldValue) {
-    const filteredItems = items.filter(i => i.timeStamp !== oldValue.timeStamp);
+    const filteredItems = items.filter(
+      (i) => i.timeStamp !== oldValue.timeStamp
+    );
 
     setItemsAndSave([...filteredItems, newValue]);
     setNewItemPosition(null);
   }
 
   function handleItemRemove(item) {
-    const filteredItems = items.filter(i => i.timeStamp !== item.timeStamp);
+    const filteredItems = items.filter((i) => i.timeStamp !== item.timeStamp);
     setItemsAndSave([...filteredItems]);
   }
 
@@ -76,7 +78,7 @@ function App() {
     return (
       <Draggable
         position={group.position}
-        onDragEnd={newPos =>
+        onDragEnd={(newPos) =>
           handleItemChange({ ...group, position: newPos }, group)
         }
         key={group.timeStamp}
@@ -84,13 +86,13 @@ function App() {
         <GroupComponent
           {...group}
           onRemove={() => handleItemRemove(group)}
-          onChange={newValue => handleItemChange(newValue, group)}
+          onChange={(newValue) => handleItemChange(newValue, group)}
         />
       </Draggable>
     );
   }
 
-  const groupElements = items.map(group => {
+  const groupElements = items.map((group) => {
     return mapGroup(group);
   });
 

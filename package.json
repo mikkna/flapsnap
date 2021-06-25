@@ -6,6 +6,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "firebase": "^7.2.2",
+    "is-url": "^1.2.4",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -14,9 +15,9 @@
     "sortablejs": "^1.10.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && NODE_DEBUG=gh-pages node internal/deploy",
+    "deploy": "yarn build && NODE_DEBUG=gh-pages node internal/deploy",
     "format": "prettier-eslint \"src/**/*.js\" --write"
   },
   "eslintConfig": {
@@ -39,6 +40,7 @@
     "gh-pages": "^2.1.1",
     "npm-gui": "^2.1.0",
     "npx": "^10.2.0",
-    "prettier-eslint": "^9.0.0"
+    "prettier-eslint": "^12.0.0",
+    "prettier-eslint-cli": "^5.0.1"
   }
 }

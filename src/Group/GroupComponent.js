@@ -5,7 +5,7 @@ import { ItemComponent, NewItemForm } from "../Item";
 import Sortable from "react-sortablejs";
 import classnames from "classnames";
 import { Undraggable } from "../Draggable";
-import { getCopiedText, copyToClipboard } from './utils';
+import { getCopiedText, copyToClipboard } from "./utils";
 
 const GroupComponent = ({
   position,
@@ -13,7 +13,7 @@ const GroupComponent = ({
   items,
   timeStamp,
   onChange,
-  onRemove
+  onRemove,
 }) => {
   const shouldShowItemFormByDefault = !items.length;
   const [showNewItemForm, setShowNewItemForm] = useState(
@@ -40,7 +40,7 @@ const GroupComponent = ({
   }
 
   function handleItemRemove(item) {
-    const filteredItems = items.filter(i => i.timeStamp !== item.timeStamp);
+    const filteredItems = items.filter((i) => i.timeStamp !== item.timeStamp);
 
     const editedGroup = cloneItem({ items: filteredItems });
     onChange(editedGroup);
@@ -48,8 +48,8 @@ const GroupComponent = ({
   }
 
   function handleItemOrderChange(order) {
-    const sortedItems = order.map(timeStamp =>
-      items.find(item => item.timeStamp === parseInt(timeStamp))
+    const sortedItems = order.map((timeStamp) =>
+      items.find((item) => item.timeStamp === parseInt(timeStamp))
     );
     const editedGroup = cloneItem({ items: sortedItems });
     onChange(editedGroup);
@@ -76,20 +76,20 @@ const GroupComponent = ({
       title,
       items,
       timeStamp,
-      ...params
+      ...params,
     });
   }
 
   function getStyle() {
     return {
-      transform: deleted ? "scale(0.7)" : ""
+      transform: deleted ? "scale(0.7)" : "",
     };
   }
 
   return (
     <div
       className={classnames("item group", {
-        "item--collapse": deleted
+        "item--collapse": deleted,
       })}
       style={getStyle()}
     >
@@ -122,9 +122,11 @@ const GroupComponent = ({
           </Undraggable>
         </div>
       )}
-      <Undraggable onClick={handleCopy} className="item-copy">
-        <button>copy</button>
-      </Undraggable>
+      {!!items.length && (
+        <Undraggable onClick={handleCopy} className="item-copy">
+          <button>copy</button>
+        </Undraggable>
+      )}
     </div>
   );
 };
@@ -134,7 +136,7 @@ GroupComponent.propTypes = {
   title: Types.string.isRequired,
   items: Types.array.isRequired,
   onChange: Types.func.isRequired,
-  onRemove: Types.func.isRequired
+  onRemove: Types.func.isRequired,
 };
 
 export default React.memo(GroupComponent);
