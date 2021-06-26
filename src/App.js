@@ -7,13 +7,9 @@ import Position from "./Position";
 import { GroupComponent } from "./Group";
 import { Draggable } from "./Draggable";
 
-const itemsFromLocalStorage = JSON.parse(
-  localStorage.getItem("dragly-items") || "[]"
-);
-
-function App() {
+function App({ db, userId }) {
   const [history, setHistory] = useState([]);
-  const [items, setItems] = useState(itemsFromLocalStorage);
+  const [items, setItems] = useState([]);
   const [newItemPosition, setNewItemPosition] = useState(null);
   const [isObfuscated, setIsObfuscated] = useState(false);
 
@@ -25,6 +21,17 @@ function App() {
       }
     });
   });
+
+  useEffect(() => {
+    db.collection("items")
+      .doc(userId)
+      .get()
+      .then((currentDoc) => {
+        if (currentDoc.exists) {
+          setItems(currentDoc.data().items);
+        }
+      });
+  }, [db, userId]);
 
   function toggleAddItem(event) {
     if (event.target !== event.currentTarget) return;
@@ -38,7 +45,9 @@ function App() {
       setHistory([...history, items]);
     }
     setItems(newItems);
-    localStorage.setItem("dragly-items", JSON.stringify(newItems));
+    db.collection("items")
+      .doc(userId)
+      .set({ items: JSON.parse(JSON.stringify(newItems)) });
   }
 
   function handleItemCreate(item) {
