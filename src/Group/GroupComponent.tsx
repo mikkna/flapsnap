@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import Types from "prop-types";
 import Item from "../Item";
 import { ItemComponent, NewItemForm } from "../Item";
 import { ReactSortable as Sortable } from "react-sortablejs";
 import classnames from "classnames";
 import { Undraggable } from "../Draggable";
 import { getCopiedText, copyToClipboard } from "./utils";
+import Position from "../Position";
 
-const GroupComponent = ({
+interface Props {
+  position?: Position;
+  title: string;
+  items: Item[];
+  timeStamp?: number;
+  onChange: (item: Item) => void;
+  onRemove: () => void;
+}
+
+const GroupComponent: React.FC<Props> = ({
   position,
   title,
   items,
@@ -30,16 +39,16 @@ const GroupComponent = ({
     }, 200);
   }
 
-  function toggleNewItemForm(e) {
+  function toggleNewItemForm() {
     setShowNewItemForm(!showNewItemForm);
   }
 
-  function handleItemCreate(item) {
+  function handleItemCreate(item: Item) {
     const editedGroup = cloneItem({ items: [...items, item] });
     onChange(editedGroup);
   }
 
-  function handleItemRemove(item) {
+  function handleItemRemove(item: Item) {
     const filteredItems = items.filter((i) => i.timeStamp !== item.timeStamp);
 
     const editedGroup = cloneItem({ items: filteredItems });
@@ -47,11 +56,8 @@ const GroupComponent = ({
     setShowNewItemForm(false);
   }
 
-  function handleItemOrderChange(order) {
-    const sortedItems = order.map((timeStamp) =>
-      items.find((item) => item.timeStamp === parseInt(timeStamp))
-    );
-    const editedGroup = cloneItem({ items: sortedItems });
+  function handleItemOrderChange(reorderedItems: Item[]) {
+    const editedGroup = cloneItem({ items: reorderedItems });
     onChange(editedGroup);
   }
 
@@ -59,11 +65,10 @@ const GroupComponent = ({
     copyToClipboard(getCopiedText({ title, items }));
   }
 
-  function mapItem(item) {
+  function mapItem(item: Item) {
     return (
       <ItemComponent
         key={item.timeStamp}
-        data-id={item.timeStamp}
         title={item.title}
         onClick={() => handleItemRemove(item)}
       />
@@ -131,12 +136,5 @@ const GroupComponent = ({
   );
 };
 
-GroupComponent.propTypes = {
-  position: Types.shape({ x: Types.number, y: Types.number }).isRequired,
-  title: Types.string.isRequired,
-  items: Types.array.isRequired,
-  onChange: Types.func.isRequired,
-  onRemove: Types.func.isRequired,
-};
 
 export default React.memo(GroupComponent);

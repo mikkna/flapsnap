@@ -1,4 +1,4 @@
-export function getOffset(el) {
+export function getOffset(el: Element) {
   const rect = el.getBoundingClientRect();
   return {
     x: rect.left + window.scrollX,

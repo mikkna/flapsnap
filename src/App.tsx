@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import classnames from "classnames";
 import "./App.scss";
 
-import { NewItemForm } from "./Item";
+import Item, { NewItemForm } from "./Item";
 import Position from "./Position";
 import { GroupComponent } from "./Group";
 import { Draggable } from "./Draggable";
+import firebase from "firebase";
 
-function App({ db, userId }) {
-  const [history, setHistory] = useState([]);
-  const [items, setItems] = useState([]);
-  const [newItemPosition, setNewItemPosition] = useState(null);
-  const [isObfuscated, setIsObfuscated] = useState(false);
+interface Props {
+  db: firebase.firestore.Firestore;
+  userId: string;
+}
+
+const env = process.env.NODE_ENV;
+const PERSIST_IN_DEV = false;
+const PERSIST = env === 'production' || PERSIST_IN_DEV;
+
+const App: React.FC<Props> = ({ db, userId }) => {
+  const [history, setHistory] = useState<Item[][]>([]);
+  const [items, setItems] = useState<Item[]>([]);
+  const [newItemPosition, setNewItemPosition] = useState<Position>();
+  const [isObfuscated, setIsObfuscated] = useState<boolean>(false);
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -28,43 +38,45 @@ function App({ db, userId }) {
       .get()
       .then((currentDoc) => {
         if (currentDoc.exists) {
-          setItems(currentDoc.data().items);
+          setItems(currentDoc.data()?.items);
         }
       });
   }, [db, userId]);
 
-  function toggleAddItem(event) {
+  function toggleAddItem(event: MouseEvent<HTMLDivElement>) {
     if (event.target !== event.currentTarget) return;
 
     const position = new Position({ x: event.pageX, y: event.pageY });
     setNewItemPosition(position);
   }
 
-  function setItemsAndSave(newItems, saveHistory = true) {
+  function setItemsAndSave(newItems: Item[], saveHistory = true) {
     if (saveHistory) {
       setHistory([...history, items]);
     }
     setItems(newItems);
-    db.collection("items")
-      .doc(userId)
-      .set({ items: JSON.parse(JSON.stringify(newItems)) });
+    if (PERSIST) {
+      db.collection("items")
+        .doc(userId)
+        .set({ items: JSON.parse(JSON.stringify(newItems)) });
+    }
   }
 
-  function handleItemCreate(item) {
+  function handleItemCreate(item: Item) {
     setItemsAndSave([...items, item]);
-    setNewItemPosition(null);
+    setNewItemPosition(undefined);
   }
 
-  function handleItemChange(newValue, oldValue) {
+  function handleItemChange(newValue: Item, oldValue: Item) {
     const filteredItems = items.filter(
       (i) => i.timeStamp !== oldValue.timeStamp
     );
 
     setItemsAndSave([...filteredItems, newValue]);
-    setNewItemPosition(null);
+    setNewItemPosition(undefined);
   }
 
-  function handleItemRemove(item) {
+  function handleItemRemove(item: Item) {
     const filteredItems = items.filter((i) => i.timeStamp !== item.timeStamp);
     setItemsAndSave([...filteredItems]);
   }
@@ -83,7 +95,7 @@ function App({ db, userId }) {
     setIsObfuscated(!isObfuscated);
   }
 
-  function mapGroup(group) {
+  function mapGroup(group: Item) {
     return (
       <Draggable
         position={group.position}
@@ -105,7 +117,6 @@ function App({ db, userId }) {
     return mapGroup(group);
   });
 
-  const env = process.env.NODE_ENV;
 
   return (
     <div className="app">
@@ -118,7 +129,7 @@ function App({ db, userId }) {
           <NewItemForm
             onCreate={handleItemCreate}
             position={newItemPosition}
-            onClose={() => setNewItemPosition(null)}
+            onClose={() => setNewItemPosition(undefined)}
           />
         )}
         <button

@@ -1,31 +1,31 @@
-import React, { Component, createRef } from "react";
-import Types from "prop-types";
+import { Component, createRef, MouseEventHandler } from "react";
 import Position, { getOffset } from "../Position";
 
-class Draggable extends Component {
-  static propTypes = {
-    children: Types.node.isRequired,
-    onDragEnd: Types.func.isRequired,
-    position: Types.shape({
-      x: Types.number.isRequired,
-      y: Types.number.isRequired,
-    }).isRequired,
+interface Props {
+  onDragEnd: (pos: Position) => void;
+  position?: Position;
+}
+
+class Draggable extends Component<Props> {
+  ref = createRef<HTMLDivElement>();
+
+  state: {
+    dragPosition?: Position
+  } = {
+    dragPosition: undefined
   };
 
-  ref = createRef();
+  dragStartOffset = {
+    x: 0,
+    y: 0
+  }
 
-  state = {
-    dragPosition: null,
-  };
-
-  dragStartOffset = null;
-
-  isValidDragTarget = (target) => {
+  isValidDragTarget = (target: any) => {
     const isChildOfGroupItems = !!target.closest(".undraggable");
     return !isChildOfGroupItems;
   };
 
-  handleItemDragStart = (event) => {
+  handleItemDragStart: MouseEventHandler = (event) => {
     if (!this.isValidDragTarget(event.target)) return;
 
     const pointerPosition = { x: event.pageX, y: event.pageY };
@@ -38,7 +38,7 @@ class Draggable extends Component {
     document.addEventListener("mousemove", this.handleItemDrag);
   };
 
-  handleItemDrag = (event) => {
+  handleItemDrag = (event: MouseEvent) => {
     const newPosition = new Position({
       x: event.pageX - this.dragStartOffset.x,
       y: event.pageY - this.dragStartOffset.y,
@@ -58,10 +58,10 @@ class Draggable extends Component {
     }
   };
 
-  getStyle(position) {
+  getStyle(p?: Position) {
     return {
-      left: position.x,
-      top: position.y,
+      left: p?.x,
+      top: p?.y,
     };
   }
 

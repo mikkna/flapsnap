@@ -17,7 +17,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-async function init(user) {
+async function init(user: firebase.User | null) {
   if (!user) {
     // Start a sign in process for an unauthenticated user.
     const provider = new firebase.auth.GoogleAuthProvider();

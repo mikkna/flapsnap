@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import Types from "prop-types";
 import { isLink } from "./utils";
 import classnames from "classnames";
 
-const ItemComponent = ({ title, onClick, ...otherProps }) => {
+interface Props {
+  title: string;
+  onClick: () => void;
+}
+
+const ItemComponent: React.FC<Props> = ({ title, onClick, ...otherProps }) => {
   const [deleted, setDeleted] = useState(false);
 
   function handleClick() {
@@ -48,15 +52,6 @@ const ItemComponent = ({ title, onClick, ...otherProps }) => {
       </span>
     </li>
   );
-};
-
-ItemComponent.propTypes = {
-  title: Types.string.isRequired,
-  onClick: Types.func,
-};
-
-ItemComponent.defaultProps = {
-  onClick: () => {},
 };
 
 export default ItemComponent;

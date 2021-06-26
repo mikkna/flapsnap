@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import Types from "prop-types";
+import React, { ChangeEvent, FormEvent, KeyboardEvent, useState } from "react";
 import Item from "./Item";
 import { getStyleObject } from "./utils";
 import classnames from "classnames";
+import Position from "../Position";
 
-const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
+interface Props {
+  isGrouped?: boolean;
+  position?: Position;
+  onCreate: (item: Item) => void;
+  onClose: () => void;
+}
+
+const NewItemFrom: React.FC<Props> = ({ isGrouped = false, position, onCreate, onClose }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
 
-  function handleCreateItem(event) {
+  function handleCreateItem(event: FormEvent) {
     event.preventDefault();
 
     if (!newItemTitle.length) return;
@@ -17,7 +24,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     setNewItemTitle("");
   }
 
-  function handleInputKeyDown(event) {
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     switch (event.keyCode) {
       case 27: // esc
         return onClose();
@@ -29,7 +36,7 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
     }
   }
 
-  function handleTitleChange({ target: { value } }) {
+  function handleTitleChange({ target: { value } }: ChangeEvent<HTMLInputElement>) {
     setNewItemTitle(value);
   }
 
@@ -58,13 +65,6 @@ const NewItemFrom = ({ isGrouped = false, position, onCreate, onClose }) => {
       />
     </form>
   );
-};
-
-NewItemFrom.propTypes = {
-  isGrouped: Types.bool,
-  position: Types.shape({}),
-  onCreate: Types.func.isRequired,
-  onClose: Types.func.isRequired,
 };
 
 export default NewItemFrom;
