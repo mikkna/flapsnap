@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Types from "prop-types";
 import Item from "../Item";
 import { ItemComponent, NewItemForm } from "../Item";
-import Sortable from "react-sortablejs";
+import { ReactSortable as Sortable } from "react-sortablejs";
 import classnames from "classnames";
 import { Undraggable } from "../Draggable";
 import { getCopiedText, copyToClipboard } from "./utils";
@@ -108,7 +108,7 @@ const GroupComponent = ({
       {(items.length || showNewItemForm) && (
         <div className="group-items">
           <Undraggable>
-            <Sortable tag="ul" onChange={handleItemOrderChange}>
+            <Sortable list={items} tag="ul" setList={handleItemOrderChange}>
               {items.map(mapItem)}
             </Sortable>
 

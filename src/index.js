@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-var firebase = require("firebase");
+import firebase from "firebase";
+
 require("firebase/firestore");
 
 const firebaseConfig = {
