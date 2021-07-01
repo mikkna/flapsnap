@@ -14,6 +14,6 @@ jobs:
       with:
         registry-url: 'https://registry.npmjs.org'
     - run: yarn
-    - run: git config user.name "mikkna" && git config user.email "noreply@example.com" && yarn deploy
+    - run: git config user.name "mikkna" && git config user.email "$(git log --format='%an' HEAD^!)" && yarn deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
