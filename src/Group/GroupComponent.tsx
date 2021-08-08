@@ -98,17 +98,21 @@ const GroupComponent: React.FC<Props> = ({
       })}
       style={getStyle()}
     >
-      {title && <span className="item-content">{title}</span>}
-      <Undraggable className="item-add item-button" onClick={toggleNewItemForm}>
-        +
-      </Undraggable>
+      <div className="group-header">
+        <div className="group-header-left">
+          {title && <span className="item-content">{title}</span>}
+          <Undraggable className="item-add item-button" onClick={toggleNewItemForm}>
+            +
+          </Undraggable>
+        </div>
 
-      <Undraggable
-        className="item-remove item-button"
-        onClick={handleGroupDelete}
-      >
-        &times;
-      </Undraggable>
+        <Undraggable
+          className="item-remove item-button"
+          onClick={handleGroupDelete}
+        >
+          &times;
+        </Undraggable>
+      </div>
 
       {(items.length || showNewItemForm) && (
         <div className="group-items">
