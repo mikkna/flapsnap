@@ -14,7 +14,7 @@ interface Props {
 }
 
 const env = process.env.NODE_ENV;
-const PERSIST_IN_DEV = false;
+const PERSIST_IN_DEV = true;
 const PERSIST = env === 'production' || PERSIST_IN_DEV;
 
 const App: React.FC<Props> = ({ db, userId }) => {
@@ -22,6 +22,8 @@ const App: React.FC<Props> = ({ db, userId }) => {
   const [items, setItems] = useState<Item[]>([]);
   const [newItemPosition, setNewItemPosition] = useState<Position>();
   const [isObfuscated, setIsObfuscated] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -33,14 +35,20 @@ const App: React.FC<Props> = ({ db, userId }) => {
   });
 
   useEffect(() => {
+    setLoading(true);
+    setError(false);
     db.collection("items")
       .doc(userId)
       .get()
       .then((currentDoc) => {
         if (currentDoc.exists) {
           setItems(currentDoc.data()?.items);
+        } else {
+          setError(true)
         }
-      });
+        setLoading(false);
+      })
+      .catch(() => setError(true))
   }, [db, userId]);
 
   function toggleAddItem(event: MouseEvent<HTMLDivElement>) {
@@ -50,19 +58,26 @@ const App: React.FC<Props> = ({ db, userId }) => {
     setNewItemPosition(position);
   }
 
-  function setItemsAndSave(newItems: Item[], saveHistory = true) {
+  async function setItemsAndSave(newItems: Item[], saveHistory = true) {
     if (saveHistory) {
       setHistory([...history, items]);
     }
     setItems(newItems);
     if (PERSIST) {
-      db.collection("items")
-        .doc(userId)
-        .set({ items: JSON.parse(JSON.stringify(newItems)) });
+      setLoading(true);
+      setError(false);
+      try {
+        await db.collection("items")
+          .doc(userId)
+          .set({ items: JSON.parse(JSON.stringify(newItems)) })
+      } catch {
+        setError(true)
+      }
+      setLoading(false)
     }
   }
 
-  function handleItemCreate(item: Item) {
+  function handleItemCreate(item: Item) {    
     setItemsAndSave([...items, item]);
     setNewItemPosition(undefined);
   }
@@ -140,6 +155,20 @@ const App: React.FC<Props> = ({ db, userId }) => {
             🤭
           </span>
         </button>
+        <div
+          className={classnames("loading action", { visible: loading })}
+        >
+          <span role="img" aria-label="Loading">
+            ♻️
+          </span>
+        </div>
+        <div
+          className={classnames("error action", { visible: error })}
+        >
+          <span role="img" aria-label="Error">
+            ⛔
+          </span>
+        </div>
 
         <button
           className={classnames("obfuscate action ", { visible: items.length })}

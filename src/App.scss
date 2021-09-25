@@ -207,6 +207,9 @@ ul {
   width: 50px;
   border-radius: 50%;
   font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.visible {
     transform: scale(1);
@@ -227,6 +230,11 @@ ul {
   &.obfuscate {
     top: 15px;
     right: 15px;
+  }
+
+  &.loading, &.error {
+    right: 50px;
+    bottom: 15px;
   }
 }
 
