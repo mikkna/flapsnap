@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/flapsnap/static/css/main.9e779475.chunk.css",
-    "main.js": "/flapsnap/static/js/main.6689b718.chunk.js",
-    "main.js.map": "/flapsnap/static/js/main.6689b718.chunk.js.map",
+    "main.css": "/flapsnap/static/css/main.b0d2a4f9.chunk.css",
+    "main.js": "/flapsnap/static/js/main.6f6a654b.chunk.js",
+    "main.js.map": "/flapsnap/static/js/main.6f6a654b.chunk.js.map",
     "runtime-main.js": "/flapsnap/static/js/runtime-main.b8de8097.js",
     "runtime-main.js.map": "/flapsnap/static/js/runtime-main.b8de8097.js.map",
-    "static/js/2.5f4818c5.chunk.js": "/flapsnap/static/js/2.5f4818c5.chunk.js",
-    "static/js/2.5f4818c5.chunk.js.map": "/flapsnap/static/js/2.5f4818c5.chunk.js.map",
+    "static/js/2.6bd976df.chunk.js": "/flapsnap/static/js/2.6bd976df.chunk.js",
+    "static/js/2.6bd976df.chunk.js.map": "/flapsnap/static/js/2.6bd976df.chunk.js.map",
     "index.html": "/flapsnap/index.html",
-    "static/css/main.9e779475.chunk.css.map": "/flapsnap/static/css/main.9e779475.chunk.css.map",
-    "static/js/2.5f4818c5.chunk.js.LICENSE.txt": "/flapsnap/static/js/2.5f4818c5.chunk.js.LICENSE.txt"
+    "static/css/main.b0d2a4f9.chunk.css.map": "/flapsnap/static/css/main.b0d2a4f9.chunk.css.map",
+    "static/js/2.6bd976df.chunk.js.LICENSE.txt": "/flapsnap/static/js/2.6bd976df.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b8de8097.js",
-    "static/js/2.5f4818c5.chunk.js",
-    "static/css/main.9e779475.chunk.css",
-    "static/js/main.6689b718.chunk.js"
+    "static/js/2.6bd976df.chunk.js",
+    "static/css/main.b0d2a4f9.chunk.css",
+    "static/js/main.6f6a654b.chunk.js"
   ]
 }
