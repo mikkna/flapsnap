@@ -1,0 +1,1 @@
+export const toPlainObject = (obj: Record<string, unknown>) => JSON.parse(JSON.stringify(obj));
