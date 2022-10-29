@@ -65,7 +65,7 @@ body * {
       opacity: 1;
     }
     > .item-copy {
-      height: 17px;
+      height: 23px;
       transition-delay: 0.5s;
     }
   }
@@ -85,10 +85,6 @@ body * {
   &:active {
     cursor: grabbing;
   }
-}
-
-.new-item {
-  margin-bottom: 5px;
 }
 
 .group {
@@ -112,6 +108,9 @@ body * {
       align-items: center;
     }
   }
+  .new-item {
+    margin-top: 5px;
+  }
 }
 
 .item-remove {
@@ -130,10 +129,6 @@ ul {
 
 .group {
   min-width: 145px;
-
-  > .item-content {
-    font-size: 17px;
-  }
 
   &.item--collapse {
     opacity: 0;
@@ -183,6 +178,7 @@ ul {
   overflow: hidden;
   height: 0;
   button {
+    margin-top: 7px;
     padding: 0;
     background: none;
     color: #fff;

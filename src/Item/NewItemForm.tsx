@@ -51,7 +51,7 @@ const NewItemFrom: React.FC<Props> = ({ isGrouped = false, position, onCreate, o
 
   return (
     <form
-      className={classnames("new-item item", { "item--absolute": position })}
+      className={classnames("new-item item", { "item--absolute": position,'group': !isGrouped  })}
       style={getStyleObject(position)}
       onSubmit={isGrouped ? handleCreateItem : handleCreateGroup}
     >
