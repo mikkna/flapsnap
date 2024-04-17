@@ -17,14 +17,14 @@ interface Props {
 type Data = {
   items?: Item[];
   devItems?: Item[];
-}
+};
 
 const env = process.env.NODE_ENV;
-const isProduction = env === 'production';
+const isProduction = env === "production";
 const PERSIST_IN_DEV = true;
-const PERSIST = isProduction|| PERSIST_IN_DEV;
-const collection = 'items';
-const field = isProduction ? 'items' : 'devItems';
+const PERSIST = isProduction || PERSIST_IN_DEV;
+const collection = "items";
+const field = isProduction ? "items" : "devItems";
 
 const App: React.FC<Props> = ({ db, userId }) => {
   const doc = userId;
@@ -37,13 +37,13 @@ const App: React.FC<Props> = ({ db, userId }) => {
   const [error, setError] = useState<Error>();
 
   const items = data?.[field] || [];
-  
+
   const setItems = (newItems: Item[]) => {
-    setData(currentData => ({
+    setData((currentData) => ({
       ...currentData,
-      [field]: newItems
-    }))
-  }
+      [field]: newItems,
+    }));
+  };
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -63,33 +63,29 @@ const App: React.FC<Props> = ({ db, userId }) => {
       .then((currentDoc: firebase.firestore.DocumentSnapshot<Data>) => {
         if (currentDoc.exists) {
           setData(currentDoc.data() || {});
-        } else {
-          setError(Error("Doc doesn't exist!"))
         }
         setLoading(false);
       })
       .catch((e) => {
-        setError(e)
-      })
+        setError(e);
+      });
   }, [db, doc]);
 
   useEffect(() => {
-    const persistRemoteData = async  () => {
+    const persistRemoteData = async () => {
       if (PERSIST && data) {
         setLoading(true);
         setError(undefined);
         try {
-          await db.collection(collection)
-            .doc(doc)
-            .set(toPlainObject(data))
+          await db.collection(collection).doc(doc).set(toPlainObject(data));
         } catch (e) {
           setError(e as Error);
         }
-        setLoading(false)
+        setLoading(false);
       }
-    }
-      persistRemoteData()
-  }, [data, db, doc])
+    };
+    persistRemoteData();
+  }, [data, db, doc]);
 
   function toggleAddItem(event: MouseEvent<HTMLDivElement>) {
     if (event.target !== event.currentTarget) return;
@@ -105,7 +101,7 @@ const App: React.FC<Props> = ({ db, userId }) => {
     setItems(newItems);
   }
 
-  function handleItemCreate(item: Item) {    
+  function handleItemCreate(item: Item) {
     setItemsAndSave([...items, item]);
     setNewItemPosition(undefined);
   }
@@ -160,7 +156,6 @@ const App: React.FC<Props> = ({ db, userId }) => {
     return mapGroup(group);
   });
 
-
   return (
     <div className="app">
       <div
@@ -183,16 +178,12 @@ const App: React.FC<Props> = ({ db, userId }) => {
             🤭
           </span>
         </button>
-        <div
-          className={classnames("loading action", { visible: loading })}
-        >
+        <div className={classnames("loading action", { visible: loading })}>
           <span role="img" aria-label="Loading">
             ♻️
           </span>
         </div>
-        <div
-          className={classnames("error action", { visible: !!error })}
-        >
+        <div className={classnames("error action", { visible: !!error })}>
           <span role="img" aria-label="Error">
             ⛔
           </span>
@@ -206,12 +197,17 @@ const App: React.FC<Props> = ({ db, userId }) => {
             {isObfuscated ? "🐵" : "🙈"}
           </span>
         </button>
-        {!!error && <div className="error-modal">
-          <h2>{error.name}</h2>
-          <p>{error.message}</p><br />{error.stack && <pre>{error.stack}</pre>}</div>}
+        {!!error && (
+          <div className="error-modal">
+            <h2>{error.name}</h2>
+            <p>{error.message}</p>
+            <br />
+            {error.stack && <pre>{error.stack}</pre>}
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default App;

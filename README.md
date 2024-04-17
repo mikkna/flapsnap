@@ -19,4 +19,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ### `yarn deploy`
 
-Builds the app with the `build` command and deploy the result to [GitHub Pages](https://mikkna.github.io/flapsnap/)
+Builds the app with the `build` command and deploys the result to [GitHub Pages](https://mikkna.github.io/flapsnap/)
